@@ -10,11 +10,15 @@ A fantasy gambling game implemented in numerous novel languages. Compare perform
 
 ## Clojure
 
-`time clojure dirty30.clj`
+```bash
+time clojure dirty30.clj
+```
 
 ## Common Lisp
 
-`time sbcl --script dirty30.lisp`
+```bash
+time sbcl --script dirty30.lisp
+```
 
 ## D
 
@@ -27,7 +31,9 @@ Be sure to run it a couple extra times, the first time will compile and cache an
 
 # Janet
 
-`time janet dirty30.janet`
+```bash
+time janet dirty30.janet
+```
 
 # Nim
 
@@ -38,8 +44,12 @@ time ./dirty30
 
 # Python
 
-`time python dirty30.py`
+```bash
+`time python dirty30.py
+```
 
 # Racket
 
-`time racket dirty30.rkt`
+```bash
+`time racket dirty30.rkt
+```
