@@ -18,7 +18,7 @@ A fantasy gambling game implemented in numerous novel languages. Compare perform
 
 ## D
 
-'''bash
+'''
 dmd dirty30.d
 time ./dirty30
 '''
@@ -31,7 +31,7 @@ Be sure to run it a couple extra times, the first time will compile and cache an
 
 # Nim
 
-'''bash
+'''
 nim c dirty30.nim
 time ./dirty30
 '''
