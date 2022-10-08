@@ -45,11 +45,11 @@ time ./dirty30
 # Python
 
 ```bash
-`time python dirty30.py
+time python dirty30.py
 ```
 
 # Racket
 
 ```bash
-`time racket dirty30.rkt
+time racket dirty30.rkt
 ```
