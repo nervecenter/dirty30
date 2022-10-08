@@ -27,8 +27,6 @@ dmd dirty30.d
 time ./dirty30
 ```
 
-Be sure to run it a couple extra times, the first time will compile and cache an executable.
-
 # Janet
 
 ```bash
