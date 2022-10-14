@@ -5,15 +5,11 @@
     (each val (sort (keys freqs))
       (let [freq (get freqs val)
             proportion (/ freq (length arr))
-            val-str (string/format "%3d\t" val)
-            freq-str (string/format "%5d\t" freq)
-            proportion-str (string/format "%.1f%%\t" (* 100.0 proportion))
-            bar-str (as-> freq b
-                          (/ b max-count)
-                          (* max-bar-length b)
-                          (seq [_ :range [0 b]] "+")
-                          (string/join b))]
-        (print val-str freq-str proportion-str "\t" bar-str)))))
+            bar-len (math/ceil (* max-bar-length (/ freq max-count)))]
+        (printf "%3d\t%5d\t%.1f%%\t\t%s" val
+                                         freq
+                                         (* 100.0 proportion)
+                                         (string/repeat "+" bar-len))))))
 
 (defn mean [arr] (/ (reduce2 + arr) (length arr)))
 
