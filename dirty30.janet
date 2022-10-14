@@ -11,8 +11,6 @@
                                          (* 100.0 proportion)
                                          (string/repeat "+" bar-len))))))
 
-(defn mean [arr] (/ (reduce2 + arr) (length arr)))
-
 (defn rolld6 [] (math/ceil (* 6 (math/random))))
 
 (defn rollnd6 [n] (seq [_ :range [0 n]] (rolld6)))
