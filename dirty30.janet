@@ -2,7 +2,7 @@
   (default max-bar-length 30)
   (let [freqs (frequencies arr)
         max-count (apply max (values freqs))]
-    (each val (sort (keys freqs))
+    (each val (sorted (keys freqs))
       (let [freq (get freqs val)
             proportion (/ freq (length arr))
             bar-len (math/ceil (* max-bar-length (/ freq max-count)))]
