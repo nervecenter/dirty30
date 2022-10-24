@@ -8,6 +8,10 @@ A fantasy gambling game implemented in numerous novel languages. Compare perform
 - Generate a hash map histogram of that sequence
 - Format and print the histogram
 
+The rules of Dirty 30: The player starts the first round by rolling 30 dice. Any 6's are removed for the next round. The goal is to remove all dice on or before the 30th roll. There are any number of gambling opportunities, such as betting on the number of rolls, with larger payouts the earlier a correct prediction is made.
+
+This program runs 100,000 Dirty 30 games, and records how many rolls it took to consume all 30 dice, then prints out a histogram of the games' results.
+
 ## Clojure
 
 ```bash
