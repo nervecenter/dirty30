@@ -55,3 +55,11 @@ time python dirty30.py
 ```bash
 time racket dirty30.rkt
 ```
+
+# Rust
+
+```bash
+cd dirty30-rs
+cargo build --release
+time ./target/release/dirty30-rs
+```
