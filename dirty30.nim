@@ -1,10 +1,9 @@
 import random
-import sequtils
 import tables
 import sugar
 import strformat
-import strutils
 import sequtils
+import strutils
 import algorithm
 
 randomize()
@@ -57,6 +56,16 @@ proc dirty30_rec(num_dice: int, num_rolls: int): int =
 
 proc dirty30_recursive(num_dice: int): int =
     dirty30_rec(num_dice, 0)
+
+proc dirty30_imperative_v2(num_dice: int): int =
+    var num_rolls = 0
+    var num_dice = num_dice
+
+    while num_dice > 0:
+        num_dice = rollnd6(num_dice).filter(r => r < 6).len
+        num_rolls += 1
+
+    return num_rolls
 
 let rolls = collect(newSeq):
     for _ in 0..100000: dirty30_imperative(30)
