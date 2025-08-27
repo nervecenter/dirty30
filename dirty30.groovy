@@ -1,40 +1,38 @@
-import random
-
-from collections import Counter
-from statistics import mean, median
-
-def ascii_histogram(rolls, max_bar_length=20) {
-    def counts_dict = rolls.countBy()
+def ascii_histogram(rolls, max_bar_length = 20) {
+    def counts_dict = rolls.countBy().sort()
     def max_count = counts_dict.values().max()
-    for k in sorted(counts_dict):
-        freq = counts_dict[k]
-        val_str = f"{k:5d}"
-        freq_str = f"{freq:5d}"
-        proportion_str = f"{(counts_dict[k] / len(rolls))*100:0.1f}"
-        bar_proportion = freq / max_count
-        bar_str = '+'* int(max_bar_length * bar_proportion)
-        print(f"{val_str} {freq_str} {proportion_str}%\t{bar_str}")
-    print()
+    for (entry in counts_dict) {
+        def freq = entry.value
+        def proportion = (freq / rolls.size().floatValue()) * 100.0
+        def bar_proportion = freq / max_count.floatValue()
+        def bar_str = "+" * Math.round(max_bar_length.floatValue() * bar_proportion)
+        println "${sprintf('%5d', entry.key)} ${sprintf('%5d', freq)} ${sprintf('%.1f', proportion)}%\t$bar_str"
+    }
+    println ""
 }
 
-def mean(arr):
-    return sum(arr) / len(arr)
 
-def rolld6():
-    return random.randint(1, 6)
+def rolld6() {
+    return Math.round(Math.random() * 6) + 1
+}
 
-def dirty30(num_dice):
-    num_rolls = 0
-    while num_dice > 0:
-        # rolls = [rolld6() for _ in range(num_dice)]
-        non_sixes = 0
-        for _ in range(num_dice):
-            if rolld6() == 6:
+def dirty30(num_dice) {
+    def num_rolls = 0
+    while (num_dice > 0) {
+        def non_sixes = 0
+        for (_ in 0..num_dice) {
+            if (rolld6() == 6) {
                 non_sixes += 1
+            }
+        }
         num_dice -= non_sixes
         num_rolls += 1
-        # num_dice -= len([r for r in rolls if r == 6])
+    }
     return num_rolls
+}
 
-rolls = [dirty30(30) for _ in range(100000)]
+rolls = []
+for (_ in 0..100000) {
+    rolls.add(dirty30(30))
+}
 ascii_histogram(rolls, 40)
