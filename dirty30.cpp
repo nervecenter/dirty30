@@ -1,12 +1,10 @@
-#include <cstdio>
+#include <iostream>
 #include <vector>
 #include <map>
-// #include <ranges>
 #include <string>
 #include <algorithm>
 #include <cstdint>
 #include <format>
-#include <cstdlib>
 
 template <typename T>
 std::map<T, uint32_t> count_frequencies(std::vector<T> array) {
@@ -41,7 +39,7 @@ void ascii_histogram(std::vector<uint32_t> array, uint32_t max_bar_length = 30)
         int bar_length = static_cast<uint32_t>(max_bar_length_float * bar_proportion);
         std::string bar = std::string(bar_length, '+');
 
-        printf("%5d %5d %0.1f%%\t%s\n", key, freq, proportion, bar.c_str());
+        std::cout << std::format("{:5d} {:5d} {:.1f}%%\t{}", key, freq, proportion, bar) << std::endl;
     }
 }
 
@@ -66,9 +64,11 @@ uint8_t dirty30(uint8_t num_dice) {
 
 int main()
 {
+    const uint32_t num_games = 100000;
     std::vector<uint32_t> rolls = {};
+    rolls.reserve(num_games);
 
-    for (uint32_t i = 0; i < 100000; i++) {
+    for (uint32_t i = 0; i < num_games; i++) {
         rolls.push_back(dirty30(30));
     }
     ascii_histogram(rolls);
