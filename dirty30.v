@@ -37,8 +37,9 @@ fn dirty30(num_dice int) int {
 }
 
 fn main() {
-    mut rolls := []int{}
-    for _ in 0 .. 100000 {
+    num_games := 100000
+    mut rolls := []int{cap: num_games}
+    for _ in 0 .. num_games {
         rolls << dirty30(30)
     }
     ascii_histogram(rolls, 40)!
