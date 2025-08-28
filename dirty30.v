@@ -5,11 +5,14 @@ import strings
 fn ascii_histogram(rolls []int, max_bar_length int)! {
     counts_dict := arrays.map_of_counts(rolls)
     max_count := arrays.max(counts_dict.values())!
+    num_rolls_float := f64(rolls.len)
+    max_bar_length_float := f64(max_bar_length)
+
     for key in counts_dict.keys().sorted() {
         freq := counts_dict[key]
-        proportion := (freq / f64(rolls.len)) * 100.0
+        proportion := (freq / num_rolls_float) * 100.0
         bar_proportion := freq / f64(max_count)
-        bar_str := strings.repeat('+'.bytes()[0], int(f64(max_bar_length) * bar_proportion))
+        bar_str := strings.repeat('+'.bytes()[0], int(max_bar_length_float * bar_proportion))
         println('${key:5d} ${freq:5d} ${proportion:.1f}%\t${bar_str}')
     }
     println('')

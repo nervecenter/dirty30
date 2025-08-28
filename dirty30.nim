@@ -8,66 +8,54 @@ import algorithm
 
 randomize()
 
-proc ascii_histogram(rolls: seq[int], max_bar_length=20) =
+proc ascii_histogram(rolls: seq[int], max_bar_length: int = 20) =
     let
-        counts_table = rolls.toCountTable
-        largest = float(counts_table.largest.val)
+        counts_table = rolls.to_count_table()
         num_rolls_float = float(rolls.len)
+        max_count = counts_table.largest.val
+        max_count_float = float(max_count)
         max_bar_length_float = float(max_bar_length)
-        roll_values = counts_table.keys.toSeq.sorted
+        roll_values_sorted = counts_table.keys.to_seq().sorted()
 
-    for k in roll_values:
+    for key in roll_values_sorted:
         let
-            freq = counts_table[k]
+            freq = counts_table[key]
             freq_float = float(freq)
             proportion = (freq_float / num_rolls_float) * 100.0
-            bar_proportion = freq_float / largest
-            bar_str = repeat('+', int(max_bar_length_float * bar_proportion))
-        echo &"{k:5d} {freq:5d} {proportion:0.1f}% \t{bar_str}"
+            bar_proportion = freq_float / max_count_float
+            bar_length = int(max_bar_length_float * bar_proportion)
+            bar_str = repeat('+', bar_length)
+        echo &"{key:5d} {freq:5d} {proportion:.1f}%\t{bar_str}"
 
-proc dirty30_imperative(num_dice: int): int =
-    var
-        num_rolls = 0
-        num_dice_remaining = num_dice
-
-    while num_dice_remaining > 0:
-        var non_sixes = 0
-        for _ in 0..num_dice_remaining:
-            if rand(1..6) == 6:
-                non_sixes += 1
-        num_dice_remaining -= non_sixes
-        num_rolls += 1
-
-    return num_rolls
+    echo ""
 
 proc rolld6(): int =
-    return rand(1..6)
+    return rand(1 .. 6)
 
 proc rollnd6(n: int): seq[int] =
-    return collect(newSeq):
-        for _ in 0..<n: rolld6()
+    return collect(new_seq_of_cap(n)):
+        for _ in 0 ..< n:
+            rolld6()
 
-proc dirty30_rec(num_dice: int, num_rolls: int): int =
-    if num_dice == 0:
-        return num_rolls
-    else:
-        let new_num_dice = rollnd6(num_dice).filter(r => r < 6).len
-        return dirty30_rec(new_num_dice, num_rolls + 1)
+# proc rollnd6_count_non_sixes(n: int): int =
+#     for _ in 0 ..< n:
+#         if rolld6() < 6:
+#             result += 1
 
-proc dirty30_recursive(num_dice: int): int =
-    dirty30_rec(num_dice, 0)
-
-proc dirty30_imperative_v2(num_dice: int): int =
+proc dirty30(num_dice: int): int =
     var num_rolls = 0
     var num_dice = num_dice
 
     while num_dice > 0:
-        num_dice = rollnd6(num_dice).filter(r => r < 6).len
+        num_dice = rollnd6(num_dice).countIt(it < 6)
+        # num_dice = rollnd6_count_non_sixes(num_dice)
         num_rolls += 1
 
     return num_rolls
 
-let rolls = collect(newSeq):
-    for _ in 0..100000: dirty30_imperative(30)
+let num_games = 100000
+let rolls = collect(new_seq_of_cap(num_games)):
+    for _ in 0 .. num_games:
+        dirty30(30)
 
 ascii_histogram(rolls, 40)
