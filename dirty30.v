@@ -25,15 +25,15 @@ fn rolld6() int {
 
 fn dirty30(num_dice int) int {
     mut num_rolls := 0
-    mut this_num_dice := num_dice
-    for this_num_dice > 0 {
-        mut non_sixes := 0
-        for _ in 0 .. this_num_dice {
+    mut remaining_dice := num_dice
+    for remaining_dice > 0 {
+        mut sixes := 0
+        for _ in 0 .. remaining_dice {
             if rolld6() == 6 {
-                non_sixes += 1
+                sixes += 1
             }
         }
-        this_num_dice -= non_sixes
+        remaining_dice -= sixes
         num_rolls += 1
     }
     return num_rolls

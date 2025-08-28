@@ -66,12 +66,12 @@ int dirty30(int num_dice)
     int num_rolls = 0;
     while (num_dice > 0)
     {
-        int non_sixes = 0;
+        int sixes = 0;
         
         foreach (int i; 0..num_dice)
-            if (rolld6() == 6) non_sixes++;
+            if (rolld6() == 6) sixes++;
 
-        num_dice -= non_sixes;
+        num_dice -= sixes;
         num_rolls++;
     }
     return num_rolls;

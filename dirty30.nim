@@ -29,26 +29,16 @@ proc ascii_histogram(rolls: seq[int], max_bar_length: int = 20) =
 
     echo ""
 
-proc rolld6(): int =
-    return rand(1 .. 6)
-
-proc rollnd6(n: int): seq[int] =
-    return collect(new_seq_of_cap(n)):
-        for _ in 0 ..< n:
-            rolld6()
-
-# proc rollnd6_count_non_sixes(n: int): int =
-#     for _ in 0 ..< n:
-#         if rolld6() < 6:
-#             result += 1
-
 proc dirty30(num_dice: int): int =
     var num_rolls = 0
-    var num_dice = num_dice
+    var remaining_dice = num_dice
 
-    while num_dice > 0:
-        num_dice = rollnd6(num_dice).countIt(it < 6)
-        # num_dice = rollnd6_count_non_sixes(num_dice)
+    while remaining_dice > 0:
+        var sixes = 0
+        for _ in 0 ..< remaining_dice:
+            if rand(1 .. 6) == 6:
+                sixes += 1
+        remaining_dice -= sixes
         num_rolls += 1
 
     return num_rolls

@@ -20,6 +20,7 @@ std::map<T, uint32_t> count_frequencies(std::vector<T> array) {
 void ascii_histogram(std::vector<uint32_t> array, uint32_t max_bar_length = 30)
 {
     auto counts_dict = count_frequencies<uint32_t>(array);
+    auto num_rolls_float = static_cast<float>(array.size());
     auto max_count_iterator = std::max_element(
         counts_dict.begin(), counts_dict.end(),
         [](const std::pair<uint32_t, uint32_t>& p1, const std::pair<uint32_t, uint32_t>& p2) {
@@ -33,7 +34,7 @@ void ascii_histogram(std::vector<uint32_t> array, uint32_t max_bar_length = 30)
     for (auto& [key, freq] : counts_dict)
     {
         float freq_float = static_cast<float>(freq);
-        float proportion = (freq_float / static_cast<float>(array.size())) * 100.0;
+        float proportion = (freq_float / num_rolls_float) * 100.0;
 
         float bar_proportion = freq_float / max_count_float;
         int bar_length = static_cast<uint32_t>(max_bar_length_float * bar_proportion);
@@ -50,13 +51,13 @@ uint8_t rolld6() {
 uint8_t dirty30(uint8_t num_dice) {
     uint8_t num_rolls = 0;
     while (num_dice > 0) {
-        uint8_t non_sixes = 0;
+        uint8_t sixes = 0;
         
         for (uint32_t i = 0; i < num_dice; i++) {
-            if (rolld6() == 6) { non_sixes++; }
+            if (rolld6() == 6) { sixes++; }
         }
 
-        num_dice -= non_sixes;
+        num_dice -= sixes;
         num_rolls++;
     }
     return num_rolls;

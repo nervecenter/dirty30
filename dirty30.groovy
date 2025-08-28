@@ -19,13 +19,13 @@ def rolld6() {
 def dirty30(num_dice) {
     def num_rolls = 0
     while (num_dice > 0) {
-        def non_sixes = 0
+        def sixes = 0
         for (_ in 0..num_dice) {
             if (rolld6() == 6) {
-                non_sixes += 1
+                sixes += 1
             }
         }
-        num_dice -= non_sixes
+        num_dice -= sixes
         num_rolls += 1
     }
     return num_rolls

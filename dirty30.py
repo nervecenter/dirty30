@@ -25,14 +25,12 @@ def rolld6():
 def dirty30(num_dice):
     num_rolls = 0
     while num_dice > 0:
-        # rolls = [rolld6() for _ in range(num_dice)]
-        non_sixes = 0
+        sixes = 0
         for _ in range(num_dice):
             if rolld6() == 6:
-                non_sixes += 1
-        num_dice -= non_sixes
+                sixes += 1
+        num_dice -= sixes
         num_rolls += 1
-        # num_dice -= len([r for r in rolls if r == 6])
     return num_rolls
 
 rolls = [dirty30(30) for _ in range(100000)]

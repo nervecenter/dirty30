@@ -12,6 +12,13 @@ The rules of Dirty 30: The player starts the first round by rolling 30 dice. Any
 
 This program runs 100,000 Dirty 30 games, and records how many rolls it took to consume all 30 dice, then prints out a histogram of the games' results.
 
+# C++
+
+```bash
+g++ -std=c++20 dirty30.cpp -o dirty30
+time ./dirty30
+```
+
 ## Clojure
 
 ```bash
@@ -31,6 +38,18 @@ dmd dirty30.d
 time ./dirty30
 ```
 
+# Groovy
+
+```bash
+time groovy dirty30.groovy
+```
+
+# Io
+
+```bash
+time io dirty30.io
+```
+
 # Janet
 
 ```bash
@@ -40,14 +59,20 @@ time janet dirty30.janet
 # Nim
 
 ```bash
-nim c dirty30.nim
+nim cc -d:release dirty30.nim
 time ./dirty30
+```
+
+# Nushell
+
+```bash
+time nu dirty30.nu
 ```
 
 # Python
 
 ```bash
-time python dirty30.py
+time python3 dirty30.py
 ```
 
 # Racket
@@ -62,4 +87,11 @@ time racket dirty30.rkt
 cd dirty30-rs
 cargo build --release
 time ./target/release/dirty30-rs
+```
+
+# V
+
+```bash
+v -prod dirty30.v
+time ./dirty30
 ```
