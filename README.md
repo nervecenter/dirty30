@@ -34,7 +34,7 @@ time sbcl --script dirty30.lisp
 #### D
 
 ```bash
-dmd dirty30.d
+dmd -O -release dirty30.d
 time ./dirty30
 ```
 

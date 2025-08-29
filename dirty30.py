@@ -1,23 +1,17 @@
 import random
 
 from collections import Counter
-from statistics import mean, median
 
 def ascii_histogram(rolls, max_bar_length=20):
     counts_dict = Counter(rolls)
     max_count = max(counts_dict.values())
     for k in sorted(counts_dict):
         freq = counts_dict[k]
-        val_str = f"{k:5d}"
-        freq_str = f"{freq:5d}"
-        proportion_str = f"{(counts_dict[k] / len(rolls))*100:0.1f}"
+        proportion = (counts_dict[k] / len(rolls)) * 100.0
         bar_proportion = freq / max_count
         bar_str = '+'* int(max_bar_length * bar_proportion)
-        print(f"{val_str} {freq_str} {proportion_str}%\t{bar_str}")
+        print(f"{k:5d} {freq:5d} {proportion:0.1f}%\t{bar_str}")
     print()
-
-def mean(arr):
-    return sum(arr) / len(arr)
 
 def rolld6():
     return random.randint(1, 6)

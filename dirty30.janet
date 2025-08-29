@@ -2,18 +2,21 @@
   (default max-bar-length 30)
   (let [freqs (frequencies arr)
         max-count (apply max (values freqs))]
-    (each val (sorted (keys freqs))
+    (each val (-> freqs (keys) (sorted))
       (let [freq (get freqs val)
             proportion (/ freq (length arr))
             bar-len (math/ceil (* max-bar-length (/ freq max-count)))]
-        (printf "%3d\t%5d\t%.1f%%\t\t%s" val
-                                         freq
-                                         (* 100.0 proportion)
-                                         (string/repeat "+" bar-len))))))
+        (printf "%3d\t%5d\t%.1f%%\t%s" val
+                                       freq
+                                       (* 100.0 proportion)
+                                       (string/repeat "+" bar-len))))))
 
-(defn rolld6 [] (math/ceil (* 6 (math/random))))
+(defn rolld6 []
+  (-> (math/random) (* 6) (math/ceil)))
 
-(defn rollnd6 [n] (seq [_ :range [0 n]] (rolld6)))
+(defn rollnd6 [n]
+  (seq [_ :range [0 n]]
+    (rolld6)))
 
 (defn dirty30 [num-dice &opt num-rolls]
   (default num-rolls 0)
@@ -24,4 +27,6 @@
                   length)
              (inc num-rolls))))
 
-(ascii_histogram (seq [_ :range [0 100000]] (dirty30 30)) 40)
+(-> (seq [_ :range [0 100000]]
+      (dirty30 30))
+    (ascii_histogram 40))

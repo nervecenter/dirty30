@@ -10,16 +10,9 @@ import
 
 import std.range : repeat;
 
-
-//T median(T)(T[] array)
-//{
-//    return array[array.length / 2];
-//}
-
 int[T] countFrequencies(T)(T[] array)
 {
     int[T] freqDict;
-
     foreach (T ele; array)
     {
         freqDict.update(
@@ -28,7 +21,6 @@ int[T] countFrequencies(T)(T[] array)
             (ref int c) { c++; }
         );
     }
-
     return freqDict;
 }
 
@@ -46,9 +38,7 @@ void ascii_histogram(int[] array, int max_bar_length = 30)
     {
         int freq = counts_dict[key];
         float freq_float = to!float(freq);
-
         float proportion = (freq_float / to!float(array.length)) * 100.0;
-
         float bar_proportion = freq_float / max_count_float;
         int bar_length = to!int(max_bar_length_float * bar_proportion);
 
@@ -79,10 +69,11 @@ int dirty30(int num_dice)
 
 void main()
 {
+    int num_games = 100000;
     int[] rolls = [];
-    foreach (i; 0..100000)
+    rolls.reserve(num_games);
+    foreach (i; 0..num_games)
         rolls ~= dirty30(30);
 
-    //int[] rolls = iota(100000).map!(() => dirty30(30)).array;
     ascii_histogram(rolls);
 }
