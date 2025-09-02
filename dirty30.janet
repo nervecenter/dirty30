@@ -1,11 +1,11 @@
 (defn ascii_histogram [arr &opt max-bar-length]
   (default max-bar-length 30)
   (let [freqs (frequencies arr)
-        max-count (apply max (values freqs))]
+        max-count (->> freqs (values) (apply max))]
     (each val (-> freqs (keys) (sorted))
       (let [freq (get freqs val)
             proportion (/ freq (length arr))
-            bar-len (math/ceil (* max-bar-length (/ freq max-count)))]
+            bar-len (-> freq (/ max-count) (* max-bar-length) (math/ceil))]
         (printf "%3d\t%5d\t%.1f%%\t%s" val
                                        freq
                                        (* 100.0 proportion)
