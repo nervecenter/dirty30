@@ -15,7 +15,7 @@ The rules of Dirty 30: The player starts the first round by rolling 30 dice. Any
 #### C++
 
 ```bash
-g++ -std=c++20 dirty30.cpp -o dirty30
+g++ -std=c++20 -O3 dirty30.cpp -o dirty30
 time ./dirty30
 ```
 
