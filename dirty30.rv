@@ -1,0 +1,34 @@
+import "rng"
+import "iter"
+
+fn ascii_histogram(arr: table<int>, max_bar_length: int) do
+    let freqs = frequencies(arr)
+    let max_count = freqs |> values |> max
+    let values = freqs |> keys |> sorted
+    for val in values do
+        let freq = freqs[val]
+        let proportion = freq / arr.len
+        let bar_len = freq |> _ / max_count |> _ * max_bar_length |> math/ceil
+        #print("%3d\t%5d\t%.1f%%\t%s", val, freq, (100.0 * proportion), string/repeat("+", bar_len))
+        print(val)
+        #print("{val}\t{freq}\t{(100.0 * proportion)}%%\t{}")
+    end
+end
+
+fn rolld6() rng.rand(6)
+
+fn rollnd6(n: int) iter.map(0..n, fn(i) rolld6())
+
+fn dirty30(num_dice: int, num_rolls: int) do
+    if num_dice == 0
+        num_rolls
+    else
+        dirty30(
+            rollnd6 |> num_dice |> iter.filter(fn(roll) roll < 6) |> len,
+            num_rolls + 1
+        )
+    end
+end
+
+0..100000 |> iter.map(fn(i) dirty30(30, 0)) |> iter.each(fn(rolls) ascii_histogram(rolls, 40))
+print("Hello, world!")
