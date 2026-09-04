@@ -57,8 +57,5 @@ fn dirty30_iter(num_dice: int, num_rolls: int) -> int do
     return num_rolls
 end
 
-iter.range(1000) |> iter.map(fn(i) dirty30_iter(30, 0)) |> iter.collect() |> ascii_histogram(40)
-#const num_range = iter.range(100000) |> iter.collect()
-#const num_range = iter.range(10) |> iter.collect()
-#const games = iter.map(num_range, fn(i) dirty30(30, 0)) |> iter.collect()
-#const num_range = ascii_histogram(games, 40)
+#iter.range(1000) |> iter.map(fn(i) dirty30_iter(30, 0)) |> iter.collect() |> ascii_histogram(40)
+iter.range(1000) |> iter.map(fn(i) dirty30(30, 0)) |> iter.collect() |> ascii_histogram(40)
