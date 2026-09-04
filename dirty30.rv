@@ -1,34 +1,64 @@
-import "rng"
-import "iter"
+
+fn frequencies(arr: table<any>) -> table<any, int> do
+    let freq_dict = {}
+    for ele in arr do
+        if freq_dict:has?(ele) do
+            freq_dict[ele] += 1
+        end else do
+            freq_dict[ele] = 1
+        end
+    end
+    return freq_dict
+end
 
 fn ascii_histogram(arr: table<int>, max_bar_length: int) do
-    let freqs = frequencies(arr)
-    let max_count = freqs |> values |> max
-    let values = freqs |> keys |> sorted
-    for val in values do
-        let freq = freqs[val]
-        let proportion = freq / arr.len
-        let bar_len = freq |> _ / max_count |> _ * max_bar_length |> math/ceil
-        #print("%3d\t%5d\t%.1f%%\t%s", val, freq, (100.0 * proportion), string/repeat("+", bar_len))
-        print(val)
-        #print("{val}\t{freq}\t{(100.0 * proportion)}%%\t{}")
+    const freqs: table<int, int> = frequencies(arr)
+    const max_count: int = freqs |> table.values() |> table.sort() |> table.last()
+    const roll_totals: table<int> = freqs |> table.keys() |> table.sort()
+    for total in roll_totals do
+        const freq: int = freqs[total]
+        const proportion: number = freq / len(arr)
+        const bar_len: int = freq |> _ / max_count |> _ * max_bar_length |> math.ceil()
+        #print(fmt("%v\t%v\t%v%%\t%v", total, freq, 100.0 * proportion, string.mul("+", bar_len)))
+        print(fmt("%v\t%v\t%v", total, freq, string.mul("+", bar_len)))
     end
 end
 
 fn rolld6() rng.rand(6)
 
-fn rollnd6(n: int) iter.map(0..n, fn(i) rolld6())
+fn rollnd6(n: int) iter.range(n) |> iter.map(fn(i) rolld6())
 
-fn dirty30(num_dice: int, num_rolls: int) do
+fn dirty30(num_dice: int, num_rolls: int) -> int do
     if num_dice == 0
         num_rolls
     else
         dirty30(
-            rollnd6 |> num_dice |> iter.filter(fn(roll) roll < 6) |> len,
+            rollnd6(num_dice) |> iter.count(fn(roll) roll < 6),
             num_rolls + 1
         )
-    end
 end
 
-0..100000 |> iter.map(fn(i) dirty30(30, 0)) |> iter.each(fn(rolls) ascii_histogram(rolls, 40))
-print("Hello, world!")
+fn dirty30_iter(num_dice: int, num_rolls: int) -> int do
+    let num_rolls: int = 0
+    let remaining_dice: int = num_dice
+    let sixes: int = 0
+
+    while remaining_dice > 0 do
+        sixes = 0
+        for i in 0..remaining_dice do
+            if rolld6() == 6 do
+                sixes += 1
+            end
+        end
+        remaining_dice -= sixes
+        num_rolls += 1
+    end
+
+    return num_rolls
+end
+
+iter.range(1000) |> iter.map(fn(i) dirty30_iter(30, 0)) |> iter.collect() |> ascii_histogram(40)
+#const num_range = iter.range(100000) |> iter.collect()
+#const num_range = iter.range(10) |> iter.collect()
+#const games = iter.map(num_range, fn(i) dirty30(30, 0)) |> iter.collect()
+#const num_range = ascii_histogram(games, 40)
