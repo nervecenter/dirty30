@@ -28,11 +28,11 @@ fn rolld6() rng.rand(6)
 
 fn rollnd6(n: int) iter.range(n):map(fn(i) rolld6())
 
-fn dirty30(num_dice: int, num_rolls: int) -> int do
+fn dirty30_rec(num_dice: int, num_rolls: int) -> int do
     if num_dice == 0
         num_rolls
     else
-        dirty30(
+        dirty30_rec(
             rollnd6(num_dice):count(fn(roll) roll < 6),
             num_rolls + 1
         )
@@ -58,4 +58,4 @@ fn dirty30_iter(num_dice: int, num_rolls: int) -> int do
 end
 
 iter.range(100000):map(fn(i) dirty30_iter(30, 0)):collect() |> ascii_histogram(40)
-#iter.range(100000):map(fn(i) dirty30(30, 0)):collect() |> ascii_histogram(40)
+#iter.range(1000):map(fn(i) dirty30_rec(30, 0)):collect() |> ascii_histogram(40)
