@@ -20,7 +20,7 @@ fn ascii_histogram(arr: table<int>, max_bar_length: int) do
         const proportion: number = freq / len(arr)
         const bar_len: int = freq |> _ / max_count |> _ * max_bar_length |> math.ceil()
         #print(fmt("%v\t%v\t%v%%\t%v", total, freq, 100.0 * proportion, string.mul("+", bar_len)))
-        print(fmt("%v\t%v\t%v", total, freq, string.mul("+", bar_len)))
+        print(fmt("%v\t%v\t%v", total, freq, string.repeat("+", bar_len)))
     end
 end
 
@@ -57,5 +57,9 @@ fn dirty30_iter(num_dice: int, num_rolls: int) -> int do
     return num_rolls
 end
 
-iter.range(100000):map(fn(i) dirty30_iter(30, 0)):collect() |> ascii_histogram(40)
-#iter.range(1000):map(fn(i) dirty30_rec(30, 0)):collect() |> ascii_histogram(40)
+const num_runs = 10000
+iter.range(num_runs)
+    :map(fn(i) dirty30_iter(30, 0))
+    #:map(fn(i) dirty30_rec(30, 0))
+    :collect()
+    |> ascii_histogram(40)
