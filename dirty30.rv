@@ -1,20 +1,20 @@
 
 fn frequencies(arr: table<any>) -> table<any, int> do
-    let freq_dict = {}
+    let freq_table = {}
     for ele in arr do
-        if freq_dict:has?(ele) do
-            freq_dict[ele] += 1
+        if freq_table:has?(ele) do
+            freq_table[ele] += 1
         end else do
-            freq_dict[ele] = 1
+            freq_table[ele] = 1
         end
     end
-    return freq_dict
+    return freq_table
 end
 
 fn ascii_histogram(arr: table<int>, max_bar_length: int) do
     const freqs: table<int, int> = frequencies(arr)
-    const max_count: int = freqs |> table.values() |> table.sort() |> table.last()
-    const roll_totals: table<int> = freqs |> table.keys() |> table.sort()
+    const max_count: int = freqs:values():sort():last()
+    const roll_totals: table<int> = freqs:keys():sort()
     for total in roll_totals do
         const freq: int = freqs[total]
         const proportion: number = freq / len(arr)
@@ -26,14 +26,14 @@ end
 
 fn rolld6() rng.rand(6)
 
-fn rollnd6(n: int) iter.range(n) |> iter.map(fn(i) rolld6())
+fn rollnd6(n: int) iter.range(n):map(fn(i) rolld6())
 
 fn dirty30(num_dice: int, num_rolls: int) -> int do
     if num_dice == 0
         num_rolls
     else
         dirty30(
-            rollnd6(num_dice) |> iter.count(fn(roll) roll < 6),
+            rollnd6(num_dice):count(fn(roll) roll < 6),
             num_rolls + 1
         )
 end
@@ -57,5 +57,5 @@ fn dirty30_iter(num_dice: int, num_rolls: int) -> int do
     return num_rolls
 end
 
-#iter.range(1000) |> iter.map(fn(i) dirty30_iter(30, 0)) |> iter.collect() |> ascii_histogram(40)
-iter.range(1000) |> iter.map(fn(i) dirty30(30, 0)) |> iter.collect() |> ascii_histogram(40)
+iter.range(100000):map(fn(i) dirty30_iter(30, 0)):collect() |> ascii_histogram(40)
+#iter.range(100000):map(fn(i) dirty30(30, 0)):collect() |> ascii_histogram(40)
