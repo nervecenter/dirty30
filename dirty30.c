@@ -7,7 +7,8 @@
 uint32_t* count_frequencies(uint32_t* array, uint32_t array_len, uint32_t* counts_dict_len) {
     uint32_t highest_num = 0;
     for (int i = 0; i < array_len; i++)
-        if (array[i] > highest_num) highest_num = array[i];
+        if (array[i] > highest_num)
+            highest_num = array[i];
 
     *counts_dict_len = highest_num + 1;
     uint32_t* counts_dict = calloc(*counts_dict_len, sizeof(uint32_t));
