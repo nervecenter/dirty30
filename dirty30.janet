@@ -1,3 +1,5 @@
+(def rng (math/rng (os/time)))
+
 (defn ascii_histogram [arr &opt max-bar-length]
   (default max-bar-length 30)
   (let [freqs (frequencies arr)
@@ -13,7 +15,7 @@
                 (string/repeat "+" bar-len))))))
 
 (defn rolld6 []
-  (-> (math/random) (* 6) (math/ceil)))
+  (-> (math/rng-int rng 6) (+ 1)))
 
 (defn rollnd6 [n]
   (seq [_ :range [0 n]]
@@ -28,13 +30,14 @@
                   length)
              (inc num-rolls))))
 
-(defn dirty30-iter [num-dice]
+(defn dirty30-iter [&opt num-dice]
+  (default num-dice 30)
   (var remaining-dice num-dice)
   (var num-rolls 0)
   (var sixes 0)
   (while (> remaining-dice 0)
     (set sixes 0)
-    (for _ 0 num-dice
+    (for _ 0 remaining-dice
       (if (= (rolld6) 6)
         (+= sixes 1)))
     (-= remaining-dice sixes)
@@ -42,5 +45,5 @@
   num-rolls)
 
 (-> (seq [_ :range [0 100000]]
-      (dirty30-iter 30))
+      (dirty30-iter))
     (ascii_histogram 40))

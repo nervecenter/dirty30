@@ -8,7 +8,7 @@ d:
 	dmd -O -release -of="dirty30_d" dirty30.d
 
 nim:
-	nim compile -d:release dirty30.nim
+	nim compile -d:release -o:dirty30_nim dirty30.nim
 
 v:
 	v -prod -o dirty30_v dirty30.v
