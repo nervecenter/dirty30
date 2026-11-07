@@ -45,18 +45,18 @@
   num-rolls)
 
 (def num-games 100000)
-(def num-threads 20)
+(def num-threads 8)
 (def games-per-worker (/ num-games num-threads))
-(var thread-results (ev/thread-chan 20))
+(def results-chan (ev/thread-chan num-threads))
 
 (defn game-runner []
-  (let [results (-> (seq [_ :range [0 games-per-worker]]
-                    (dirty30-iter)))]
-    (ev/give thread-results results)))
+  (->> (seq [_ :range [0 games-per-worker]]
+         (dirty30-iter))
+       (ev/give results-chan)))
 
 (var games-results @[])
 (for _ 0 num-threads (ev/spawn-thread (game-runner)))
 (for _ 0 num-threads
-  (array/concat games-results (ev/take thread-results)))
+  (array/concat games-results (ev/take results-chan)))
 
 (ascii_histogram games-results 40)
